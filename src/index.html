@@ -4,8 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <form class="search-form" id="search-form">
+      <input
+        type="text"
+        name="query"
+        autocomplete="off"
+        placeholder="Search images..."
+      />
+    </form>
+    <ul class="gallery"></ul>
+    <button type="button" class="load-more-btn">
+      <span class="label">Load more</span>
+      <span
+        class="spinner-border spinner-border-sm spinner is-hidden"
+        role="status"
+        aria-hidden="true"
+      ></span>
+    </button>
     <script src="./index.js"></script>
   </body>
 </html>
