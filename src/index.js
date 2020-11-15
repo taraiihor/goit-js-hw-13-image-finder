@@ -3,6 +3,7 @@ import galleryCard from "./templates/imege-gallery.hbs";
 import debouce from "lodash.debounce";
 import NewsApiService from "./js/apiService";
 import LoadMoreBtn from "./js/load-more-btn";
+const basicLightbox = require("basiclightbox");
 
 const refs = {
   searchForm: document.querySelector("#search-form"),
@@ -15,6 +16,8 @@ const loadMoreBtn = new LoadMoreBtn({
 const newsApiServise = new NewsApiService();
 refs.searchForm.addEventListener("input", debouce(onSearsh, 500));
 loadMoreBtn.refs.button.addEventListener("click", onLoadMore);
+refs.galleryImage.addEventListener("click", onModal);
+
 function onSearsh(e) {
   e.preventDefault();
   newsApiServise.query = e.target.value;
@@ -48,4 +51,14 @@ function renderGallryCard(articles) {
 
 function clearRender() {
   refs.galleryImage.innerHTML = "";
+}
+
+function onModal(e) {
+  if (e.target.nodeName !== "IMG") {
+    return;
+  }
+  const instance = basicLightbox.create(
+    `<img src="${e.target.dataset.src}" alt="" />`
+  );
+  instance.show();
 }
