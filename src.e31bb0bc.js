@@ -2247,6 +2247,20 @@ var templateFunction = _handlebars.default.template({
           "column": 28
         }
       }
+    }) : helper)) + "\" data-src=\"" + alias4((helper = (helper = lookupProperty(helpers, "largeImageURL") || (depth0 != null ? lookupProperty(depth0, "largeImageURL") : depth0)) != null ? helper : alias2, _typeof(helper) === alias3 ? helper.call(alias1, {
+      "name": "largeImageURL",
+      "hash": {},
+      "data": data,
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 40
+        },
+        "end": {
+          "line": 3,
+          "column": 57
+        }
+      }
     }) : helper)) + "\" alt=\"\" width=\"300\"/>\r\n\r\n  <div class=\"stats\">\r\n    <p class=\"stats-item\">\r\n      <i class=\"material-icons\">thumb_up</i>\r\n      " + alias4((helper = (helper = lookupProperty(helpers, "likes") || (depth0 != null ? lookupProperty(depth0, "likes") : depth0)) != null ? helper : alias2, _typeof(helper) === alias3 ? helper.call(alias1, {
       "name": "likes",
       "hash": {},
@@ -2843,6 +2857,10 @@ var LoadMoreBtn = /*#__PURE__*/function () {
 }();
 
 exports.default = LoadMoreBtn;
+},{}],"../node_modules/basiclightbox/dist/basicLightbox.min.js":[function(require,module,exports) {
+var define;
+var global = arguments[3];
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{("undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).basicLightbox=e()}}((function(){return function e(n,t,o){function r(c,u){if(!t[c]){if(!n[c]){var s="function"==typeof require&&require;if(!u&&s)return s(c,!0);if(i)return i(c,!0);var a=new Error("Cannot find module '"+c+"'");throw a.code="MODULE_NOT_FOUND",a}var l=t[c]={exports:{}};n[c][0].call(l.exports,(function(e){return r(n[c][1][e]||e)}),l,l.exports,e,n,t,o)}return t[c].exports}for(var i="function"==typeof require&&require,c=0;c<o.length;c++)r(o[c]);return r}({1:[function(e,n,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.create=t.visible=void 0;var o=function(e){var n=arguments.length>1&&void 0!==arguments[1]&&arguments[1],t=document.createElement("div");return t.innerHTML=e.trim(),!0===n?t.children:t.firstChild},r=function(e,n){var t=e.children;return 1===t.length&&t[0].tagName===n},i=function(e){return null!=(e=e||document.querySelector(".basicLightbox"))&&!0===e.ownerDocument.body.contains(e)};t.visible=i;t.create=function(e,n){var t=function(e,n){var t=o('\n\t\t<div class="basicLightbox '.concat(n.className,'">\n\t\t\t<div class="basicLightbox__placeholder" role="dialog"></div>\n\t\t</div>\n\t')),i=t.querySelector(".basicLightbox__placeholder");e.forEach((function(e){return i.appendChild(e)}));var c=r(i,"IMG"),u=r(i,"VIDEO"),s=r(i,"IFRAME");return!0===c&&t.classList.add("basicLightbox--img"),!0===u&&t.classList.add("basicLightbox--video"),!0===s&&t.classList.add("basicLightbox--iframe"),t}(e=function(e){var n="string"==typeof e,t=e instanceof HTMLElement==!0;if(!1===n&&!1===t)throw new Error("Content must be a DOM element/node or string");return!0===n?Array.from(o(e,!0)):"TEMPLATE"===e.tagName?[e.content.cloneNode(!0)]:Array.from(e.children)}(e),n=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};if(null==(e=Object.assign({},e)).closable&&(e.closable=!0),null==e.className&&(e.className=""),null==e.onShow&&(e.onShow=function(){}),null==e.onClose&&(e.onClose=function(){}),"boolean"!=typeof e.closable)throw new Error("Property `closable` must be a boolean");if("string"!=typeof e.className)throw new Error("Property `className` must be a string");if("function"!=typeof e.onShow)throw new Error("Property `onShow` must be a function");if("function"!=typeof e.onClose)throw new Error("Property `onClose` must be a function");return e}(n)),c=function(e){return!1!==n.onClose(u)&&function(e,n){return e.classList.remove("basicLightbox--visible"),setTimeout((function(){return!1===i(e)||e.parentElement.removeChild(e),n()}),410),!0}(t,(function(){if("function"==typeof e)return e(u)}))};!0===n.closable&&t.addEventListener("click",(function(e){e.target===t&&c()}));var u={element:function(){return t},visible:function(){return i(t)},show:function(e){return!1!==n.onShow(u)&&function(e,n){return document.body.appendChild(e),setTimeout((function(){requestAnimationFrame((function(){return e.classList.add("basicLightbox--visible"),n()}))}),10),!0}(t,(function(){if("function"==typeof e)return e(u)}))},close:c};return u}},{}]},{},[1])(1)}));
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -2858,6 +2876,8 @@ var _loadMoreBtn = _interopRequireDefault(require("./js/load-more-btn"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var basicLightbox = require("basiclightbox");
+
 var refs = {
   searchForm: document.querySelector("#search-form"),
   galleryImage: document.querySelector(".gallery")
@@ -2869,6 +2889,7 @@ var loadMoreBtn = new _loadMoreBtn.default({
 var newsApiServise = new _apiService.default();
 refs.searchForm.addEventListener("input", (0, _lodash.default)(onSearsh, 500));
 loadMoreBtn.refs.button.addEventListener("click", onLoadMore);
+refs.galleryImage.addEventListener("click", onModal);
 
 function onSearsh(e) {
   e.preventDefault();
@@ -2905,7 +2926,16 @@ function renderGallryCard(articles) {
 function clearRender() {
   refs.galleryImage.innerHTML = "";
 }
-},{"./css/style.css":"css/style.css","./templates/imege-gallery.hbs":"templates/imege-gallery.hbs","lodash.debounce":"../node_modules/lodash.debounce/index.js","./js/apiService":"js/apiService.js","./js/load-more-btn":"js/load-more-btn.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+function onModal(e) {
+  if (e.target.nodeName !== "IMG") {
+    return;
+  }
+
+  var instance = basicLightbox.create("<img src=\"".concat(e.target.dataset.src, "\" alt=\"\" />"));
+  instance.show();
+}
+},{"./css/style.css":"css/style.css","./templates/imege-gallery.hbs":"templates/imege-gallery.hbs","lodash.debounce":"../node_modules/lodash.debounce/index.js","./js/apiService":"js/apiService.js","./js/load-more-btn":"js/load-more-btn.js","basiclightbox":"../node_modules/basiclightbox/dist/basicLightbox.min.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -2933,7 +2963,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50558" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50434" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
